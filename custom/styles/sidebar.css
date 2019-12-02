@@ -1,0 +1,111 @@
+/****** sidebar style start ******/
+#sidebar 
+{
+    /*width: 200px;*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #333;
+    color: #fff;
+    transition: all 0.3s; 
+    padding-right: 0 !important; 
+    padding-left: 0 !important;
+    border-right: 1px solid #333; 
+}
+
+#sidebar.active 
+{
+    margin-left: -200px;
+}
+
+#sidebar .sidebar-logo 
+{
+    background: #fff;
+    padding-bottom: 10px; 
+    border-bottom: 1px solid #666;
+}
+
+#sidebar .sidebar-logo img 
+{
+    max-height: 60px; 
+    width: 100%; 
+}
+
+#sidebar .sidebar-header p a
+{
+    display: block;
+    color: #fff; 
+    text-decoration: none; 
+    text-transform: uppercase;
+}
+
+#sidebar .sidebar-header p:hover a {
+    color: #58c6fc;
+}
+
+#sidebar .sidebar-header p#btn-logout:hover
+{
+    background-color: #db1139; 
+}
+
+#sidebar .sidebar-header p#btn-logout:hover a
+{
+    color: #fff; 
+}
+
+#sidebar ul.components 
+{
+    padding: 5px 0 10px 0;
+    /*border-bottom: 1px solid #47748b;*/
+}
+
+#sidebar ul p, 
+{
+    color: #fff;
+    padding: 5px;
+}
+
+#sidebar ul li a 
+{
+    padding: 5px;
+    font-size: 0.9em;
+    display: block; 
+    color: #fff; 
+    text-decoration: none; 
+    
+}
+#sidebar ul li a:hover 
+{
+    color: #333 !important;
+    background: #efefef;
+}
+
+#sidebar ul li.active > a, #sidebar a[aria-expanded="true"] 
+{
+    color: #fff !important;
+}
+
+
+a[data-toggle="collapse"] 
+{
+    position: relative;
+}
+
+#sidebar ul li ul.submenu li a
+{
+    font-size: 0.8em !important;
+    padding-left: 30px !important;
+    background: #fff !important;
+    color: #000 !important; 
+    border: none !important;
+}
+
+#sidebar ul li ul.submenu li a:hover
+{
+    background: #fff !important;
+    color: #007aff !important; 
+}
+
+/****** sidebar style end ******/

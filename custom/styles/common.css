@@ -1,0 +1,16 @@
+.subject:hover
+{
+    transform: scale(1.02); 
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+}
+
+.pointer 
+{
+    cursor: pointer;
+}
+
+#class-input 
+{
+    width: 230px; 
+}
