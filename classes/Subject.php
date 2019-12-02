@@ -84,6 +84,32 @@ public function startClass($time_id, $ref_text)
 }
 
 
+public function getSubjectTime($sub_id) 
+{
+    $sql = $this->conn->prepare("
+        SELECT `time`.time_id, `time`.start_time, `time`.end_time, `time`.week_day 
+        FROM tbl_subject sub
+        INNER JOIN tbl_subject_time `time` ON `time`.sub_id = sub.sub_id 
+        WHERE sub.sub_id = :sub_id "); 
+    $sql->execute([
+        "sub_id" => $sub_id 
+    ]); 
+    return $sql->fetchAll(PDO::FETCH_ASSOC); 
+}
+
+public function getAttendanceTime2($sub_id) 
+{
+    $sql = $this->conn->prepare("
+        SELECT * FROM tbl_enrollment enr 
+        INNER JOIN tbl_user usr ON usr.usr_id = enr.student 
+        LEFT JOIN tbl_attendance att ON enr.student = att.student 
+        INNER JOIN tbl_attendance_activity act ON act.act_id = att.act_id 
+        INNER JOIN tbl_subject_time `time` ON `time`.time_id = act.time_id 
+        INNER JOIN tbl_subject sub ON sub.sub_id = `time`.sub_id 
+        WHERE sub.sub_id = :sub_id ");
+}
+
+
 } //=== end class ===//
 
 ?>

@@ -11,7 +11,7 @@ public function __construct($conn)
 
 //====================================== user function =======================================//
 
-public function login($username, $input_password) 
+public function login($username, $input_password, $info=null) 
 {
 	$sql = $this->conn->prepare("SELECT * FROM tbl_user usr WHERE usr.usr_name=:username"); 
 	$sql->execute([
@@ -31,7 +31,7 @@ public function login($username, $input_password)
         if($status_id!=1)
         {
             $_SESSION["login_error"] = 2;
-            header("Location: login.php");
+            header("Location: index.php");
             return; 
         }
 
@@ -44,8 +44,19 @@ public function login($username, $input_password)
 
             switch($usr_type)
             {
-                case 1: echo "student"; break;
-                case 2: header("Location: lecturer/index.php"); break;
+                case 1: 
+                    if(!is_null($info))
+                    {
+                        // sign attendance for student 
+                        // ref_text and act_id is used 
+                        // to refer to what subject and what time 
+                        $this->signAttendance($usr_id, $info);
+                    }
+                    header("Location: student/index.php"); 
+                    break;
+                case 2: 
+                    header("Location: lecturer/index.php"); 
+                    break;
                 case 3: echo "admin"; break;
             } // end switch
             
@@ -64,17 +75,84 @@ public function login($username, $input_password)
 
 }
 
+public function signAttendance($student, $info) 
+{
+    // ================= check student enrollment ================= //
+    $sql = $this->conn->prepare("
+        SELECT * FROM tbl_enrollment enr WHERE enr.student = :student AND md5(enr.sub_id) = :sub_id");
+    $sql->execute([
+        "student" => $student, 
+        "sub_id" => $info["sub_id"] 
+    ]); 
+    if($sql->rowCount() == 0) // means this student does not enroll this subject
+    {
+        $_SESSION["message"] = "Time is over for attendance.";
+        return;
+    }
+
+
+    // ================= get act_id & check whether it is valid time for sign attendance ================= //
+    $sql2 = $this->conn->prepare("
+        SELECT act.act_id, `time`.start_time, `time`.end_time, `time`.week_day FROM tbl_attendance_activity act 
+        INNER JOIN tbl_subject_time `time` ON `time`.time_id = act.time_id 
+        WHERE md5(act_id) = :act_id");
+    $sql2->execute([
+        "act_id" => $info["act_id"] 
+    ]);  
+    $row2 = $sql2->fetch(PDO::FETCH_ASSOC); 
+    $act_id = $row2["act_id"]; 
+
+    // check the time
+    $start_time = $row2["start_time"]; 
+    $end_time = $row2["end_time"]; 
+    $week_day = $row2["week_day"]; 
+
+    $this_time = date("H:i"); 
+    $this_week_day = date("w"); 
+    if( $week_day != $this_week_day || !($this_time>=$start_time && $this_time<=$this_time) ) 
+    {
+        $_SESSION["message"] = "Time's up for signsing attendance."; 
+        return; 
+    }
+
+
+
+    // ================= check student already sign attendance or not ================= //
+    $sql3 = $this->conn->prepare("
+        SELECT * FROM tbl_attendance att WHERE att.student = :student AND md5(att.act_id) = :act_id "); 
+    $sql3->execute([
+        "student" => $student, 
+        "act_id" => $info["act_id"]  
+    ]); 
+    if($sql3->rowCount()>0) 
+    {
+        $_SESSION["message"] = "You signed the attendance already."; 
+        return; 
+    }
+
+    // ================= finally insert the attendance ================= //
+    $sql4 = $this->conn->prepare("
+        INSERT INTO tbl_attendance (student, act_id) 
+        VALUES (:student, :act_id)"); 
+    $sql4->execute([
+        "student" => $student, 
+        "act_id" => $act_id 
+    ]);
+    $_SESSION["message"] = "Sign attendance success."; 
+    return;
+}
+
 
 public function checkIsAdmin() 
 {
     $usr_id = $_SESSION["usr_id"]; 
 
-    $sql = $this->conn->prepare("SELECT position FROM tbl_user usr WHERE usr.usr_id=:usr_id");
+    $sql = $this->conn->prepare("SELECT usr_type FROM tbl_user usr WHERE usr.usr_id=:usr_id");
     $sql->execute([
         "usr_id" => $usr_id 
     ]); 
     $position = $sql->fetchColumn(); 
-    if($position == 1)
+    if($position == 3)
         return true;
     else 
         return false;

@@ -15,31 +15,38 @@ if($display_class)
     $errorCorrectionLevel = 'L';
     $matrixPointSize = 5;
 
-    // user data
+    // user data 
+    $act_id = $current_class_row[0]["act_id"]; 
+    $sub_id = $current_class_row[0]["sub_id"]; 
+    $sub_name = $current_class_row[0]["sub_name"]; 
+    $sub_code = $current_class_row[0]["sub_code"]; 
+
     $ip = "192.168.43.154"; 
-    // $data = "http://".$ip.":81/attendance/mobile_scan_qr.php?otp=".md5($otp)."&uid=".md5($user_id);
-    $data = $current_class_row[0]["ref_text"]; 
+    $data = "http://".$ip.":81/attendance/index.php?aid=".md5($act_id)."&sub=".md5($sub_id);
+    // $data = $current_class_row[0]["ref_text"]; 
     $filename = $PNG_TEMP_DIR.'class'.md5($data.'|'.$errorCorrectionLevel.'|'.$matrixPointSize).'.png';
     QRcode::png($data, $filename, $errorCorrectionLevel, $matrixPointSize, 2); 
 
 ?>
 <div class="modal" id="modal-qrcode">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg mw-100 m-2">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Modal Heading</h4>
+                <h4 class="modal-title"><?= $sub_code." - ".$sub_name; ?></h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                <?php echo '<img src="'.$PNG_WEB_DIR.basename($filename).'" />'; ?>
+                <div align="center">
+                    <?php echo '<img class="col-10 col-sm-4" src="'.$PNG_WEB_DIR.basename($filename).'" id="qrcode" />'; ?>
+                </div>
             </div>
 
             <!-- Modal footer -->
-            <div class="modal-footer">
+            <div class="modal-footer py-2">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
 

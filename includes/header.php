@@ -3,6 +3,7 @@
 <head>
     <title><?= empty($page_title) ? "SUC Attendance" : $page_title; ?></title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- jquery -->
     <script type="text/javascript" src="/attendance/assets/jquery/jquery-3.4.1.min.js"></script>
     

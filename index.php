@@ -1,11 +1,24 @@
 <?php 
 session_start(); 
+ini_set('display_errors', 'Off');
 // assign page title
 $page_title = "Login"; 
 
 // db conn
 include "classes/Database.php"; 
 $db = new Database(); 
+
+// if scan qr 
+if(!empty($_GET["aid"]) && !empty($_GET["sub"]))
+{
+    $aid = $_GET["aid"]; 
+    $sub = $_GET["sub"]; 
+}
+else
+{
+    $aid = "";
+    $sub = "";
+}
 
 
 if(isset($_SESSION["login_error"]))
@@ -22,9 +35,20 @@ if(isset($_POST["username"]))
     $username = $_POST["username"]; 
     $usr_password = $_POST["usr_password"]; 
 
+    $info = null;
+    $aid = $_POST["aid"] == "" ? null : $_POST["aid"]; 
+    $sub = $_POST["sub"] == "" ? null : $_POST["sub"]; 
+
+    if(!is_null($aid) && !is_null($sub))
+    {
+        $info = array(); 
+        $info["act_id"] = $aid; 
+        $info["sub_id"] = $sub; 
+    }
+
     include "classes/User.php"; 
     $user_class = new User($db->conn); 
-    $user_class->login($username, $usr_password); 
+    $user_class->login($username, $usr_password, $info); 
 }
 
 include 'functions/common.php';
@@ -54,10 +78,12 @@ include 'includes/header.php';
 
 <div class="container-fluid">
     <div class="row no-gutter pt-5">
-        <div class="card col-4 mx-auto mt-5">
+        <div class="card col-10 col-sm-4 mx-auto mt-5">
             <div class="card-body">
                 <form class="needs-validation" id="login-form" method="POST" action="index.php">
-                    
+                    <input type="hidden" name="aid" value="<?= $aid; ?>" />
+                    <input type="hidden" name="sub" value="<?= $sub; ?>" />
+
                     <legend>SUC Attendance System</legend>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">

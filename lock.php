@@ -2,6 +2,11 @@
 session_start(); 
 date_default_timezone_set('Asia/Kuala_Lumpur'); 
 
+// define('DEBUG', false);
+
+// error_reporting(E_ALL);
+// ini_set('display_errors', DEBUG ? 'On' : 'Off');
+
 if(!isset($_SESSION["usr_id"]))
 {
     session_destroy(); 
