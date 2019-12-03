@@ -73,6 +73,7 @@ public function login($username, $input_password, $info=null)
         header("Location: index.php"); 
 	}
 
+    die;
 }
 
 public function signAttendance($student, $info) 
@@ -86,7 +87,7 @@ public function signAttendance($student, $info)
     ]); 
     if($sql->rowCount() == 0) // means this student does not enroll this subject
     {
-        $_SESSION["message"] = "Time is over for attendance.";
+        $_SESSION["message"] = "You have not enroll this subject yet.";
         return;
     }
 
@@ -107,11 +108,11 @@ public function signAttendance($student, $info)
     $end_time = $row2["end_time"]; 
     $week_day = $row2["week_day"]; 
 
-    $this_time = date("H:i"); 
+    $this_time = date("H:i:s"); 
     $this_week_day = date("w"); 
-    if( $week_day != $this_week_day || !($this_time>=$start_time && $this_time<=$this_time) ) 
+    if( !($week_day == $this_week_day && $this_time>=$start_time && $this_time<=$end_time) ) 
     {
-        $_SESSION["message"] = "Time's up for signsing attendance."; 
+        $_SESSION["message"] = "Time's up for signing attendance."; 
         return; 
     }
 

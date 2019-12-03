@@ -1,7 +1,7 @@
 <!-- Sidebar  -->
 <nav class="col-2 no-gutter" id="sidebar">
     <div class="sidebar-logo">
-        <img src="/attendance/assets/images/lanyangyang.jpg">
+        <img src="/attendance/assets/images/southern_logo.jpg">
     </div>
 
     <div class="pt-2 sidebar-header border-bottom">
@@ -17,7 +17,7 @@
         </li>
 
         <li>
-            <a href="<?= MENU_DIR; ?>/timetable.php" target="_blank">Timetable</a>
+            <a href="<?= MENU_DIR; ?>/view_subject.php">Subject</a>
         </li>
     </ul>  
 </nav>

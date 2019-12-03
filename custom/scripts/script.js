@@ -4,7 +4,10 @@ $(document).ready(function()
     updateClock(); 
 
     // chosen
-    $(".chosen").chosen();
+    $(".chosen").chosen(); 
+
+    // tooltip
+    $("[data-toggle='tooltip'").tooltip(); 
 
 
 });

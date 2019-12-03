@@ -10,6 +10,10 @@
     <!-- fontawesome -->
     <link rel="stylesheet" type="text/css" href="/attendance/assets/fontawesome-5.11.2/css/all.min.css">
     <script type="text/javascript" src="/attendance/assets/fontawesome-5.11.2/js/all.min.js"></script>
+
+    <!-- jquery ui -->
+    <link rel="stylesheet" type="text/css" href="/attendance/assets/jquery-ui/jquery-ui.min.css">
+    <script type="text/javascript" src="/attendance/assets/jquery-ui/jquery-ui.min.js"></script>
     
     <!-- bootstrap -->
     <link rel="stylesheet" type="text/css" href="/attendance/assets/bootstrap-4.3.1/css/bootstrap.min.css">
@@ -22,16 +26,18 @@
     <link rel="stylesheet" type="text/css" href="/attendance/assets/datatable/fixedHeader.bootstrap4.min.css">
     <script type="text/javascript" src="/attendance/assets/datatable/dataTables.fixedHeader.min.js"></script>
 
-    <!-- jquery ui -->
-    <link rel="stylesheet" type="text/css" href="/attendance/assets/jquery-ui/jquery-ui.min.css">
-    <script type="text/javascript" src="/attendance/assets/jquery-ui/jquery-ui.min.js"></script>
 
     <!-- bootbox -->
     <script type="text/javascript" src="/attendance/assets/bootbox/bootbox.all.min.js"></script>
 
     <!-- jquery chosen -->
     <link rel="stylesheet" type="text/css" href="/attendance/assets/chosen/chosen.min.css">
-    <script type="text/javascript" src="/attendance/assets/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="/attendance/assets/chosen/chosen.jquery.min.js"></script> 
+
+    <!-- js graph -->
+    <script type="text/javascript" src="/attendance/assets/graph/js/Chart.bundle.js"></script>
+    <script src="/attendance/assets/graph/js/raphael-2.1.4.min.js"></script>
+    <script src="/attendance/assets/graph/js/justgage.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/attendance/custom/styles/sidebar.css?d=<?= date("YmdHis"); ?>">
     <link rel="stylesheet" type="text/css" href="/attendance/custom/styles/common.css?date=<?= date("YmdHis"); ?>">
@@ -40,6 +46,13 @@
 </head>
 <body>
     <?php 
+    if(isset($_SESSION["message"]))
+    {
+        echo "<script>bootbox.alert('".$_SESSION["message"]."')</script>"; 
+        unset($_SESSION["message"]); 
+    }
+
+
     if(USR_TYPE == 2)
     {
         if($not_start_class)
@@ -60,7 +73,7 @@
         {
             ?>
             <div class="pr-2" align="right">
-                <small>Click the QR icon to show the QR code.</small>
+                <small class="badge text-light label-urgent">Click the QR icon to show the QR code.</small>
                 <i class="fas fa-qrcode pointer" data-toggle="modal" data-target="#modal-qrcode"></i>
             </div>
             <?php 

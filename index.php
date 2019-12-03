@@ -1,5 +1,6 @@
 <?php 
 session_start(); 
+date_default_timezone_set('Asia/Kuala_Lumpur'); 
 ini_set('display_errors', 'Off');
 // assign page title
 $page_title = "Login"; 

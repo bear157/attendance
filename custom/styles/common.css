@@ -10,8 +10,75 @@
     cursor: pointer;
 }
 
+.noresize
+{
+    resize: none;
+}
+
 #class-input 
 {
     width: 230px; 
 }
 
+#attendance-content 
+{
+    border: 1px solid gray; 
+    height: 75vh; 
+    max-height: 75vh; 
+}
+
+.label-urgent {
+    background-color: #eb4034;
+    animation: infinite 2s linear urgent;
+    -webkit-animation: infinite 2s linear urgent;
+}
+
+@keyframes urgent {
+    0% { background-color: #eb4034; }
+
+    49% { background-color: #eb4034; }
+
+    50% { background-color: #4287f5; }
+
+    99% { background-color: #4287f5; }
+
+    100% { background-color: #eb4034; }
+}
+
+@-webkit-keyframes urgent {
+    0% { background-color: #eb4034; }
+
+    49% { background-color: #eb4034; }
+
+    50% { background-color: #4287f5; }
+
+    99% { background-color: #4287f5; }
+
+    100% { background-color: #eb4034; }
+}
+
+
+
+/* dashboard styling */
+.dashboard section 
+{
+    max-height: 35vh; 
+    height: 35vh; 
+    overflow: auto; 
+}
+
+.dashboard-qrcode 
+{
+    height: 18vh; 
+    width: auto; 
+}
+
+/* minor modification of bootstrap styling */
+.list-group-flush .list-group-item:first-child {
+  border-top: 0;
+}
+
+.list-group-flush .list-group-item:last-child {
+  margin-bottom: 0;
+  border-bottom: 0;
+}
