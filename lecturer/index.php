@@ -18,7 +18,7 @@ include "../includes/sidebar_lecturer.php";
     <div class="row">
         
         <div class="col-sm-6 col-12 p-4">
-            <section class="border border-info px-3 py-2 bg-light">
+            <section class="border border-info px-3 py-2 mb-5 bg-light section-sm">
                 <?php 
                 if($display_class) // if got qr to display
                 {
@@ -76,26 +76,54 @@ include "../includes/sidebar_lecturer.php";
                 ?>
 
             </section>
-        </div>
 
-        <div class="col-sm-6 col-12 p-4">
-            <section class="border p-3">
-                2
+            <section class="border border-warning p-3 bg-light">
+                <h6 class="pb-2 border-bottom">Quick Action</h6>
+                <button class="btn btn-warning mb-2">Issue Class Cancel <i class="fas fa-ban" data-fa-transform="rotate-90"></i></button>
+                <a href="timetable.php" target="_blank" class="btn btn-info mb-2">View Timetable <i class="fas fa-table"></i></a>
+
             </section>
         </div>
 
-    </div>
+        
 
-    <div class="row">
-        <div class="col-sm-6 col-12 p-4">
-            <section class="border p-3">
-               3
-            </section>
-        </div>
 
+        
         <div class="col-sm-6 col-12 p-4">
-            <section class="border p-3">
-                4
+            <section class="border border-info p-3 bg-light section-lg">
+                <h6 class="pb-2 border-bottom">Attendance Chart <i class="fas fa-info-circle pointer" data-toggle="tooltip" title="Show the last attendance chart of the subject."></i></h6>
+
+
+                <label class="" for="subject-input">
+                    <span>Subject: </span>
+                    <select class="form-control-sm chosen" name="" id="subject-input" onchange="getSubjectChart(this.value)" >
+                        <?php 
+                        // ===== get all subject ===== //
+                        $sub_row = $sub_class->getAllSubject(); 
+                        foreach ($sub_row as $key => $row) 
+                        {
+                            $sub_code = $row["sub_code"]; 
+                            $sub_id = $row["sub_id"]; 
+                            $sub_name = $row["sub_name"]; 
+
+                            echo "<option value='$sub_id'>$sub_code $sub_name</option>";
+                        }
+
+                        ?>
+                    </select>
+                </label>
+
+                <div id="chart-box">
+                    <?php 
+                    if(count($sub_row) > 0)
+                    {
+                        $selected_sub_id = $sub_row[0]["sub_id"]; 
+                        include "attendance_chart.php";
+                    }
+                    ?>
+                </div>
+
+
             </section>
         </div>
 

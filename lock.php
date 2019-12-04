@@ -51,10 +51,12 @@ switch(USR_TYPE)
 
 // check what semester is
 $sem_class = new Semester($db->conn); 
-list($sem_id, $sem_start, $sem_end) = $sem_class->getCurrentSemester();
+list($sem_id, $sem_start, $sem_end, $sem_year, $sem_number) = $sem_class->getCurrentSemester();
 define("SEM_ID", $sem_id); 
 define("SEM_START", $sem_start); 
 define("SEM_END", $sem_end); 
+define("SEM_YEAR", $sem_year); 
+define("SEM_NUMBER", $sem_number); 
 
 
 // common function

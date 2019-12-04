@@ -25,6 +25,8 @@ public function getCurrentSemester()
         $sem_id = 0;
         $sem_start = 0; 
         $sem_end = 0; 
+        $sem_year = 0; 
+        $sem_number = 0; 
     }
     else
     {
@@ -32,9 +34,11 @@ public function getCurrentSemester()
         $sem_id = $row["sem_id"]; 
         $sem_start = $row["start_date"]; 
         $sem_end = $row["end_date"]; 
+        $sem_year = $row["sem_year"]; 
+        $sem_number = $row["sem_number"]; 
     }
     
-    return array( $sem_id, $sem_start, $sem_end ); 
+    return array( $sem_id, $sem_start, $sem_end, $sem_year, $sem_number ); 
 
 }
 

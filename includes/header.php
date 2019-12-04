@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?= empty($page_title) ? "SUC Attendance" : $page_title; ?></title>
+    <title>
+        <?php 
+        if( empty($page_title) ) 
+            $page_title = "SUC Attendance"; 
+        echo $page_title; 
+        ?>
+            
+    </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- jquery -->
@@ -52,32 +59,35 @@
         unset($_SESSION["message"]); 
     }
 
-
-    if(USR_TYPE == 2)
+    if($page_title != "Timetable") // if timetable page no need show this
     {
-        if($not_start_class)
+        if(USR_TYPE == 2)
         {
-            $sub_name = $current_class_row[0]["sub_name"]; 
-            $time_id = $current_class_row[0]["time_id"]; 
-            ?>
-            <div class="col-sm-10 offset-sm-2">
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    You have <b><?= $sub_name; ?></b> class now! Please <a class="alert-link" href="#" onclick="startClass('<?= $time_id;  ?>')">click here to start the class.</a>
+            if($not_start_class)
+            {
+                $sub_name = $current_class_row[0]["sub_name"]; 
+                $time_id = $current_class_row[0]["time_id"]; 
+                ?>
+                <div class="col-sm-10 offset-sm-2">
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        You have <b><?= $sub_name; ?></b> class now! Please <a class="alert-link" href="#" onclick="startClass('<?= $time_id;  ?>')">click here to start the class.</a>
+                    </div>
                 </div>
-            </div>
-            <?php 
-        }
+                <?php 
+            }
 
-        if($display_class)
-        {
-            ?>
-            <div class="pr-2" align="right">
-                <small class="badge text-light label-urgent">Click the QR icon to show the QR code.</small>
-                <i class="fas fa-qrcode pointer" data-toggle="modal" data-target="#modal-qrcode"></i>
-            </div>
-            <?php 
+            if($display_class)
+            {
+                ?>
+                <div class="pr-2" align="right">
+                    <small class="badge text-light label-urgent">Click the QR icon to show the QR code.</small>
+                    <i class="fas fa-qrcode pointer" data-toggle="modal" data-target="#modal-qrcode"></i>
+                </div>
+                <?php 
+            }
         }
     }
+    
 
     ?>

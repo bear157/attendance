@@ -125,13 +125,15 @@ public function checkClass()
 
 
     $sql = $this->conn->prepare("
-        SELECT sub.*, `time`.*, act.act_id, act.ref_text FROM tbl_subject sub 
+        SELECT sub.*, `time`.*, act.act_id, act.ref_text, ccl.ccl_id FROM tbl_subject sub 
         INNER JOIN tbl_subject_time `time` ON `time`.sub_id = sub.sub_id 
         LEFT JOIN tbl_attendance_activity act ON act.time_id = `time`.time_id 
+        LEFT JOIN tbl_class_cancel ccl ON ccl.time_id = `time`.time_id AND ccl.cancel_date = :date_now 
         WHERE `time`.start_time <= :time_now AND `time`.end_time >= :time_now AND `time`.week_day = :week_day AND sub.lecturer=:lecturer");
     $sql->execute([
         "time_now" => $time_now, 
         "week_day" => $week_day, 
+        "date_now" => $date_now, 
         "lecturer" => USR_ID 
     ]); 
     return $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -196,7 +198,7 @@ public function getStudentAttendance($student, $dates, $time_id)
     return $sql->fetchAll(PDO::FETCH_ASSOC); 
 }
 
-
+// ============= get the attendance data by time, subject, date) ========================== //
 public function getClassChartData($sub_id, $time_id, $dates) 
 {
     // =================== get all student number ========================== //
@@ -215,6 +217,52 @@ public function getClassChartData($sub_id, $time_id, $dates)
     $count_present_student = $sql->fetchColumn(); 
 
     return array($count_all_student, $count_present_student); 
+}
+
+// ============= get the last attendance data by subject ; ** display in dashboard  ========================== //
+public function getSubjectChartData($sub_id) // : array
+{
+    // get latest time id
+    $sql = $this->conn->prepare("
+        SELECT ifnull(act.act_id,0) as act_id, `time`.time_id, ifnull(date(act.created_date), '0000-00-00') as created_date  FROM tbl_subject_time `time` 
+        LEFT JOIN tbl_attendance_activity act ON `time`.time_id = act.time_id 
+        WHERE `time`.sub_id = :sub_id 
+        ORDER BY act.created_date DESC 
+        LIMIT 0,1"); 
+    $sql->execute([
+        "sub_id"    => $sub_id
+    ]); 
+    $row            = $sql->fetch(PDO::FETCH_ASSOC);
+    $act_id         = $row["act_id"]; 
+    $time_id        = $row["time_id"]; 
+    $created_date   = $row["created_date"]; 
+
+    if($act_id != 0) 
+    {
+        // ======== start to get chart data ========= //
+        // =================== get all student number ========================== //
+        $student_row = $this->getClassStudent($sub_id, $time_id); 
+        $count_all_student = count($student_row); 
+
+        // =================== get present student number ========================== //
+        $sql = $this->conn->prepare("
+            SELECT COUNT(DISTINCT att.student) FROM tbl_attendance att 
+            INNER JOIN tbl_attendance_activity act ON act.act_id = att.act_id 
+            WHERE act.act_id = :act_id "); 
+        $sql->execute([
+            "act_id"    => $act_id 
+        ]); 
+        $count_present_student = $sql->fetchColumn(); 
+
+
+        return [$act_id, $count_all_student, $count_present_student, $created_date];
+    }
+    else
+    {
+        return [$act_id, 0, 0, $created_date];
+    }
+
+
 }
 
 

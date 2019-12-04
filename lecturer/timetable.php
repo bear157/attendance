@@ -1,6 +1,7 @@
 <?php
 include '../lock.php';
-    
+$page_title = "Timetable"; 
+
     //=====  load subject class =====//
     $sub_class = new Subject($db->conn); 
 
@@ -26,9 +27,18 @@ include '../lock.php';
     $arr_week_day = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
 
 ?>
-<div class="container-fluid">
+<div class="container">
     
-    <table class="table table-bordered small timetable">
+    <div align="center">
+        <h4>Timetable (<?= "Year ".SEM_YEAR." Semester ".SEM_NUMBER; ?>)</h4>
+        <table>
+            <tr>
+                <td><?= USR_FULL_NAME; ?></td>
+            </tr>
+        </table>
+    </div>
+
+    <table class="table small timetable">
         <!-- display time -->
         <tr>
             <td></td>
@@ -43,7 +53,7 @@ include '../lock.php';
 
             for($i = 1; $i <= 6; $i++)
             {
-                echo "<td width='15%'>".$arr_week_day[$i]."</td>"; 
+                echo "<td class='timetable-weekday' width='15%'>".$arr_week_day[$i]."</td>"; 
             } // end for loop
 
             ?>
@@ -54,7 +64,7 @@ include '../lock.php';
         {
             $str_time = date("g:i a", strtotime("{$j}:00"))."<br> - <br>".date("g:i a", strtotime(($j+1).":00"));
             echo "<tr>";
-            echo "<td>$str_time</td>";
+            echo "<td class='timetable-time'>$str_time</td>";
             for($i = 1; $i <= 6; $i++)
             {
                 if ( !isset($timetable_data[$j][$i]) ) 
@@ -89,7 +99,7 @@ include '../lock.php';
                             $arr_rowspan[$i] = 0;
                         $arr_rowspan[$i] += $rowspan-1; 
 
-                        echo "<td class='border-dark' rowspan='$rowspan' style='background-color: ".$arr_color[$sub_id]."; '><strong>$sub_code <br>$sub_name </strong></td>"; 
+                        echo "<td class='has-class' rowspan='$rowspan' style='background-color: ".$arr_color[$sub_id]."; '>$sub_code <br>$sub_name </td>"; 
                     } // end foreach
 
 

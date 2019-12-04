@@ -27,4 +27,9 @@
         $("#attendance-content").load("ajax_class_attendance.php", {value: value, sub_id: sub_id}); 
     }
 
+    // dashboard use
+    function getSubjectChart(sub_id) 
+    {
+        $("#chart-box").load("attendance_chart.php", {sub_id: sub_id}); 
+    }
 </script>

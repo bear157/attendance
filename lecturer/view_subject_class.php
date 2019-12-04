@@ -87,7 +87,7 @@ $arr_week_day = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'F
             </select>
         </label>
 
-        <a class="btn btn-sm btn-warning" href="class_cancel.php?sub_id=<?= $sub_id; ?>" title="Click to issue a class cancel." data-toggle="tooltip">Class Cancel <i class="fas fa-ban"></i></a>
+        <a class="btn btn-sm btn-warning" href="class_cancel.php?sub_id=<?= $sub_id; ?>" title="Click to issue a class cancel." data-toggle="tooltip">Class Cancel <i class="fas fa-ban" data-fa-transform="rotate-90"></i></a>
 
 
     </div>

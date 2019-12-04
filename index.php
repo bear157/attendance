@@ -75,11 +75,19 @@ include 'includes/header.php';
     {
         color: red; 
     }
+    
+    body
+    {
+      background-image: url("assets/images/login-bg.png"); 
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
 </style>
 
-<div class="container-fluid">
+<div class="container-fluid" id="login-page">
     <div class="row no-gutter pt-5">
-        <div class="card col-10 col-sm-4 mx-auto mt-5">
+        <div class="card col-10 col-sm-4 mx-auto mt-5 shadow-lg border border-light rounded-lg">
             <div class="card-body">
                 <form class="needs-validation" id="login-form" method="POST" action="index.php">
                     <input type="hidden" name="aid" value="<?= $aid; ?>" />
@@ -99,7 +107,7 @@ include 'includes/header.php';
                         <input class="form-control" type="password" name="usr_password" placeholder="Password" required />
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary" type="submit">Login</button>
+                        <button class="btn btn-primary" type="submit">LOGIN</button>
                     </div>
 
                     <p class=" <?= ($login_error!=0) ? "show" : "hide"; ?>" id="response_text">
