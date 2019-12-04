@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2019 at 05:19 PM
+-- Generation Time: Dec 04, 2019 at 09:04 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.12
 
@@ -42,7 +42,9 @@ CREATE TABLE `tbl_attendance` (
 --
 
 INSERT INTO `tbl_attendance` (`att_id`, `student`, `punch_time`, `is_verify`, `punch_method`, `act_id`) VALUES
-(1, 3, '2019-12-02 14:06:20', 0, 1, 1);
+(1, 3, '2019-12-02 14:06:20', 0, 1, 1),
+(2, 3, '2019-12-03 04:21:18', 0, 1, 2),
+(3, 4, '2019-12-03 04:22:15', 0, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -63,7 +65,32 @@ CREATE TABLE `tbl_attendance_activity` (
 --
 
 INSERT INTO `tbl_attendance_activity` (`act_id`, `time_id`, `created_by`, `created_date`, `ref_text`) VALUES
-(1, 3, 2, '2019-12-02 09:22:54', 'ehuonf');
+(1, 3, 2, '2019-12-02 09:22:54', 'ehuonf'),
+(2, 4, 2, '2019-12-03 04:08:10', '68yxw0'),
+(4, 3, 2, '2019-12-01 16:00:00', '000000');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_class_cancel`
+--
+
+CREATE TABLE `tbl_class_cancel` (
+  `ccl_id` int(11) NOT NULL,
+  `time_id` int(11) NOT NULL,
+  `reason` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cancel_date` date NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status_id` int(11) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_class_cancel`
+--
+
+INSERT INTO `tbl_class_cancel` (`ccl_id`, `time_id`, `reason`, `cancel_date`, `created_date`, `status_id`) VALUES
+(2, 3, NULL, '2019-12-09', '2019-12-03 11:53:15', 1),
+(4, 6, NULL, '2019-12-04', '2019-12-04 06:55:37', 1);
 
 -- --------------------------------------------------------
 
@@ -130,7 +157,8 @@ CREATE TABLE `tbl_subject` (
 
 INSERT INTO `tbl_subject` (`sub_id`, `sub_name`, `sub_code`, `lecturer`, `sem_id`) VALUES
 (1, 'Web Development', 'BTPR2113', 2, 1),
-(2, 'Information Security and Assurance', 'BTIS2073', 2, 1);
+(2, 'Information Security and Assurance', 'BTIS2073', 2, 1),
+(3, 'Internet Application', 'ABCD1234', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -154,7 +182,10 @@ INSERT INTO `tbl_subject_time` (`time_id`, `sub_id`, `week_day`, `start_time`, `
 (1, 1, 1, '13:00:00', '15:00:00'),
 (2, 1, 2, '11:00:00', '12:00:00'),
 (3, 2, 1, '15:00:00', '23:00:00'),
-(4, 2, 2, '15:00:00', '17:00:00');
+(4, 2, 2, '12:00:00', '19:00:00'),
+(5, 2, 3, '08:00:00', '13:00:00'),
+(6, 3, 3, '13:00:00', '23:00:00'),
+(7, 3, 4, '09:00:00', '12:00:00');
 
 -- --------------------------------------------------------
 
@@ -204,6 +235,12 @@ ALTER TABLE `tbl_attendance_activity`
   ADD PRIMARY KEY (`act_id`);
 
 --
+-- Indexes for table `tbl_class_cancel`
+--
+ALTER TABLE `tbl_class_cancel`
+  ADD PRIMARY KEY (`ccl_id`);
+
+--
 -- Indexes for table `tbl_enrollment`
 --
 ALTER TABLE `tbl_enrollment`
@@ -241,13 +278,19 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_attendance`
 --
 ALTER TABLE `tbl_attendance`
-  MODIFY `att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_attendance_activity`
 --
 ALTER TABLE `tbl_attendance_activity`
-  MODIFY `act_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `act_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tbl_class_cancel`
+--
+ALTER TABLE `tbl_class_cancel`
+  MODIFY `ccl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_enrollment`
@@ -265,13 +308,13 @@ ALTER TABLE `tbl_semester`
 -- AUTO_INCREMENT for table `tbl_subject`
 --
 ALTER TABLE `tbl_subject`
-  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_subject_time`
 --
 ALTER TABLE `tbl_subject_time`
-  MODIFY `time_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `time_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
