@@ -35,6 +35,7 @@ $db = new Database();
 define('USR_ID', $_SESSION["usr_id"]); 
 define('USR_FULL_NAME', $_SESSION["full_name"]); 
 define('USR_TYPE', $_SESSION["usr_type"]); 
+define('USR_NAME', $_SESSION["usr_name"]); 
 switch(USR_TYPE)
 {
     case 1: 

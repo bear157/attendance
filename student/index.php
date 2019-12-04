@@ -7,6 +7,7 @@ include "../includes/header.php";
 include "../includes/sidebar_student.php"; 
 ?>
 <div class="col-sm-10 offset-sm-2">
+    <h2>Dashboard</h2>
 
 </div>
 <?php 

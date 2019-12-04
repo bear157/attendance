@@ -1,5 +1,6 @@
 <?php 
 
+
 // ============================== check lecturer has class currently or not ==============================//
 $sub_class = new Subject($db->conn);
 $current_class_row = $sub_class->checkClass(); 

@@ -13,34 +13,35 @@ public function __construct($conn)
 
 public function login($username, $input_password, $info=null) 
 {
-	$sql = $this->conn->prepare("SELECT * FROM tbl_user usr WHERE usr.usr_name=:username"); 
-	$sql->execute([
-		"username" => $username
-	]); 
+    $sql = $this->conn->prepare("SELECT * FROM tbl_user usr WHERE usr.usr_name=:username"); 
+    $sql->execute([
+        "username" => $username
+    ]); 
 
-	if($sql->rowCount()>0)
-	{
-		$row = $sql->fetch(PDO::FETCH_ASSOC); 
-		$fetch_password = $row["usr_password"]; 
-		$usr_id = $row["usr_id"]; 
-        $full_name = $row["full_name"]; 
-        $status_id = $row["status_id"]; 
-        $usr_type = $row["usr_type"]; 
+    if($sql->rowCount()>0)
+    {
+        $row            = $sql->fetch(PDO::FETCH_ASSOC); 
+        $fetch_password = $row["usr_password"]; 
+        $usr_id         = $row["usr_id"]; 
+        $full_name      = $row["full_name"]; 
+        $status_id      = $row["status_id"]; 
+        $usr_type       = $row["usr_type"]; 
                 
 
-        if($status_id!=1)
+        if($status_id != 1)
         {
             $_SESSION["login_error"] = 2;
             header("Location: index.php");
             return; 
         }
 
-		if(password_verify($input_password, $fetch_password)) 
-		{
-			$_SESSION["usr_id"] = $usr_id; 
-            $_SESSION["full_name"] = $full_name; 
-            $_SESSION["usr_type"] = $usr_type; 
-			$_SESSION["login_error"] = 0;  
+        if(password_verify($input_password, $fetch_password)) 
+        {
+            $_SESSION["usr_id"]         = $usr_id; 
+            $_SESSION["full_name"]      = $full_name; 
+            $_SESSION["usr_type"]       = $usr_type; 
+            $_SESSION["login_error"]    = 0;  
+            $_SESSION["usr_name"]    = $row["usr_name"]; 
 
             switch($usr_type)
             {
@@ -60,18 +61,18 @@ public function login($username, $input_password, $info=null)
                 case 3: echo "admin"; break;
             } // end switch
             
-		}
-		else
-		{
-			$_SESSION["login_error"] = 1;
+        }
+        else
+        {
+            $_SESSION["login_error"] = 1;
             header("Location: index.php"); 
-		}
-	}
-	else
-	{
-		$_SESSION["login_error"] = 1;
+        }
+    }
+    else
+    {
+        $_SESSION["login_error"] = 1;
         header("Location: index.php"); 
-	}
+    }
 
     die;
 }
@@ -82,8 +83,8 @@ public function signAttendance($student, $info)
     $sql = $this->conn->prepare("
         SELECT * FROM tbl_enrollment enr WHERE enr.student = :student AND md5(enr.sub_id) = :sub_id");
     $sql->execute([
-        "student" => $student, 
-        "sub_id" => $info["sub_id"] 
+        "student"   => $student, 
+        "sub_id"    => $info["sub_id"] 
     ]); 
     if($sql->rowCount() == 0) // means this student does not enroll this subject
     {
@@ -100,16 +101,16 @@ public function signAttendance($student, $info)
     $sql2->execute([
         "act_id" => $info["act_id"] 
     ]);  
-    $row2 = $sql2->fetch(PDO::FETCH_ASSOC); 
-    $act_id = $row2["act_id"]; 
+    $row2       = $sql2->fetch(PDO::FETCH_ASSOC); 
+    $act_id     = $row2["act_id"]; 
 
     // check the time
     $start_time = $row2["start_time"]; 
-    $end_time = $row2["end_time"]; 
-    $week_day = $row2["week_day"]; 
+    $end_time   = $row2["end_time"]; 
+    $week_day   = $row2["week_day"]; 
 
-    $this_time = date("H:i:s"); 
-    $this_week_day = date("w"); 
+    $this_time      = date("H:i:s"); 
+    $this_week_day  = date("w"); 
     if( !($week_day == $this_week_day && $this_time>=$start_time && $this_time<=$end_time) ) 
     {
         $_SESSION["message"] = "Time's up for signing attendance."; 
@@ -122,8 +123,8 @@ public function signAttendance($student, $info)
     $sql3 = $this->conn->prepare("
         SELECT * FROM tbl_attendance att WHERE att.student = :student AND md5(att.act_id) = :act_id "); 
     $sql3->execute([
-        "student" => $student, 
-        "act_id" => $info["act_id"]  
+        "student"   => $student, 
+        "act_id"    => $info["act_id"]  
     ]); 
     if($sql3->rowCount()>0) 
     {
@@ -136,8 +137,8 @@ public function signAttendance($student, $info)
         INSERT INTO tbl_attendance (student, act_id) 
         VALUES (:student, :act_id)"); 
     $sql4->execute([
-        "student" => $student, 
-        "act_id" => $act_id 
+        "student"   => $student, 
+        "act_id"    => $act_id 
     ]);
     $_SESSION["message"] = "Sign attendance success."; 
     return;

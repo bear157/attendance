@@ -1,5 +1,5 @@
 <!-- Sidebar  -->
-<nav class="col-2 no-gutter" id="sidebar">
+<nav class="col-sm-2 no-gutter" id="sidebar">
     <div class="sidebar-logo">
         <img src="/attendance/assets/images/southern_logo.jpg">
     </div>
@@ -13,11 +13,11 @@
 
     <ul class="list-unstyled components">
         <li>
-            <a href="<?= MENU_DIR; ?>/view_subject.php">Subject</a>
+            <a href="<?= MENU_DIR; ?>/attendance_status.php">Attendance Status</a>
         </li>
 
         <li>
-            <a href="<?= MENU_DIR; ?>/view_subject.php">Subject</a>
+            <a href="<?= MENU_DIR; ?>/timetable.php" target="_blank">Timetable</a>
         </li>
     </ul>  
 </nav>

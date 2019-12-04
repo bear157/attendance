@@ -66,12 +66,13 @@
             if($not_start_class)
             {
                 $sub_name = $current_class_row[0]["sub_name"]; 
+                $sub_id = $current_class_row[0]["sub_id"]; 
                 $time_id = $current_class_row[0]["time_id"]; 
                 ?>
                 <div class="col-sm-10 offset-sm-2">
                     <div class="alert alert-danger alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        You have <b><?= $sub_name; ?></b> class now! Please <a class="alert-link" href="#" onclick="startClass('<?= $time_id;  ?>')">click here to start the class.</a>
+                        You have <b><?= $sub_name; ?></b> class now! Please <a class="alert-link" href="#" onclick="startClass('<?= $time_id;  ?>')">click here to start the class</a> or <a href="class_cancel.php?sub_id=<?= $sub_id; ?>&dates=<?= date("Y-m-d"); ?>" class="alert-link">click here to cancel class.</a> 
                     </div>
                 </div>
                 <?php 

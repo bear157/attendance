@@ -32,4 +32,18 @@
     {
         $("#chart-box").load("attendance_chart.php", {sub_id: sub_id}); 
     }
+
+    function classCancel()
+    {
+        var sub_id = $("#cancel-subject-input").val(); 
+        if(sub_id === null )
+        {
+            bootbox.alert("Choose subject for class cancel.");
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 </script>

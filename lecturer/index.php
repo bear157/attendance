@@ -79,7 +79,7 @@ include "../includes/sidebar_lecturer.php";
 
             <section class="border border-warning p-3 bg-light">
                 <h6 class="pb-2 border-bottom">Quick Action</h6>
-                <button class="btn btn-warning mb-2">Issue Class Cancel <i class="fas fa-ban" data-fa-transform="rotate-90"></i></button>
+                <button class="btn btn-warning mb-2" type="button" data-toggle="modal" data-target="#modal-cancel">Issue Class Cancel <i class="fas fa-ban" data-fa-transform="rotate-90"></i></button>
                 <a href="timetable.php" target="_blank" class="btn btn-info mb-2">View Timetable <i class="fas fa-table"></i></a>
 
             </section>
@@ -132,6 +132,47 @@ include "../includes/sidebar_lecturer.php";
 
 
 </div>
+
+<!-- class cancel modal -->
+<div class="modal" id="modal-cancel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Issue Class Cancel</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form method="GET" action="class_cancel.php" onsubmit="return classCancel()">
+                    <label class="" for="cancel-subject-input">
+                        <span>Subject: </span>
+                        <select class="form-control-sm chosen" name="sub_id" id="cancel-subject-input">
+                            <option value="" selected disabled>Select subject for class cancel</option>
+                            <?php 
+                            // ===== get all subject ===== //
+                            foreach ($sub_row as $key => $row) 
+                            {
+                                $sub_code = $row["sub_code"]; 
+                                $sub_id = $row["sub_id"]; 
+                                $sub_name = $row["sub_name"]; 
+
+                                echo "<option value='$sub_id'>$sub_code $sub_name</option>";
+                            }
+                            ?>
+                        </select>
+                    </label>
+                    <button type="submit" class="btn btn-success btn-sm">Ok</button>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
 <?php 
 // page footer
 include "../includes/footer.php";

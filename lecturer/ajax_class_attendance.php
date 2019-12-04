@@ -46,7 +46,7 @@ $draw = new diagramdraw();
                     <tr>
                         <th width="70%">Student / ID</th> 
                         <th>Attendance Status</th>
-                        <th>Action</th>
+                        <!-- <th>Action</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -71,13 +71,13 @@ $draw = new diagramdraw();
                             $punch_time = date("h:i a", strtotime($punch_datetime)); 
                             $str_attendance = "<span class='bg-primary p-2 rounded-lg'>Present</span> 
                             <br><small class='mt-2 badge badge-light border border-secondary'>Time: $punch_time</small>"; 
-                            $str_reject = "<button>Reject</button>";
+                            $str_reject = "<button type='button'>Reject</button>";
                         }
                         ?>
                         <tr>
                             <td><?= "$student_name / $student_id"; ?></td>
                             <td><?= $str_attendance; ?></td>
-                            <td><?= $str_reject; ?></td>
+                            <!-- <td><?= $str_reject; ?></td> -->
                         </tr>
                         <?php 
                     } // end foreach ( display student )

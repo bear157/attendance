@@ -13,6 +13,13 @@ else
     die(header("Location: view_subject.php")); 
 }
 
+if(isset($_GET["dates"]) && !empty($_GET["dates"]))
+{
+    $cancel_dates = $_GET["dates"];     
+}
+else
+    $dates = "";
+
 //=====  load subject class =====//
     $sub_class = new Subject($db->conn); 
 
@@ -97,7 +104,7 @@ $arr_week_day = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'F
                                             continue;
 
                                         ?>
-                                        <option value="<?= $time_id."||".$class_date; ?>"><?= $class_date; ?></option>
+                                        <option value="<?= $time_id."||".$class_date; ?>" <?= $cancel_dates == $class_date ? "selected" : ""; ?>><?= $class_date; ?></option>
                                         <?php
                                     }
                                     ?>

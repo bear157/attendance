@@ -34,7 +34,7 @@ $arr_week_day = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'F
             ?>
 
             <div class="col-12 col-sm-6 mb-2" align="center">
-                <div class="card pointer col-11 subject px-0" onclick="window.location='view_subject_class.php?sub_id=<?= $sub_id; ?>';">
+                <div class="card pointer col-11 subject px-0 shadow" onclick="window.location='view_subject_class.php?sub_id=<?= $sub_id; ?>';">
                     <div class="card-body bg-light">
                         <p><?= $sub_code; ?></p>
                         <h6><b><?= $sub_name; ?></b></h6>

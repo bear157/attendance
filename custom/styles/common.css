@@ -111,3 +111,9 @@
 {
     border: 1px solid #333 !important;
 }
+
+/* modify chosen styling */
+.chosen-container 
+{
+    width: 250px !important; 
+}

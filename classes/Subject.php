@@ -16,7 +16,16 @@ public function getAllSubject()
     {
         // ============= student get subject ============//
         case 1: 
+            $sql = $this->conn->prepare("
+                SELECT * FROM tbl_subject sub 
+                INNER JOIN tbl_enrollment enr ON enr.sub_id = sub.sub_id 
+                WHERE sub.sem_id = :sem_id AND enr.student = :student ");
+            $sql->execute([
+                "sem_id"    => SEM_ID, 
+                "student"  => USR_ID 
+            ]); 
 
+            return $sql->fetchAll(PDO::FETCH_ASSOC);
             break;
 
         // ============= lecturer get subject ============//
@@ -82,7 +91,28 @@ public function getTimetableData()
     {
         // ============= student get subject ============//
         case 1: 
+            $sql = $this->conn->prepare("
+                SELECT * 
+                FROM tbl_subject_time `time` 
+                INNER JOIN tbl_subject sub ON sub.sub_id = `time`.sub_id 
+                INNER JOIN tbl_enrollment enr ON enr.sub_id = sub.sub_id 
+                WHERE enr.student = :student AND sub.sem_id = :sem_id 
+                ORDER BY `time`.start_time ASC, `time`.week_day ASC"); 
+            $sql->execute([
+                "sem_id"    => SEM_ID, 
+                "student"  => USR_ID 
+            ]); 
+            $timetable_data = array(); // 4d array; timetable_data[start_hour][week_day][] = array to store class time info
+            while($row = $sql->fetch(PDO::FETCH_ASSOC))
+            {
+                $week_day = $row["week_day"]; 
+                $start_time = $row["start_time"]; 
+                $start_hour = date("G", strtotime($start_time)); 
 
+                $timetable_data[$start_hour][$week_day][] = $row;
+            } // end while
+            
+            return $timetable_data; 
             break;
 
         // ============= lecturer get subject ============//
@@ -311,6 +341,22 @@ public function getCancelHistory($sub_id)
     return $sql->fetchAll(PDO::FETCH_ASSOC); 
 }
 
+
+public function getSubjectAbsentHours($sub_id)
+{
+    $sql = $this->conn->prepare("
+        SELECT ifnull(SUM(TIMESTAMPDIFF(HOUR, `time`.start_time, `time`.end_time)),0) FROM tbl_attendance_activity act 
+        INNER JOIN tbl_subject_time `time` ON `time`.time_id = act.time_id 
+        INNER JOIN tbl_enrollment enr ON enr.sub_id = `time`.sub_id 
+        LEFT JOIN tbl_attendance att ON att.act_id = act.act_id AND enr.student = att.student 
+        WHERE enr.student = :student AND `time`.sub_id = :sub_id AND att.att_id IS NULL "); 
+    $sql->execute([
+        "student"   => USR_ID, 
+        "sub_id"    => $sub_id 
+    ]); 
+
+    return $sql->fetchColumn(); 
+}
 
 
 
