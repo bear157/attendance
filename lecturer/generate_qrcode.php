@@ -21,8 +21,8 @@ $sub_name = $current_class_row[0]["sub_name"];
 $sub_code = $current_class_row[0]["sub_code"]; 
 
 // generate qrcode
-$ip = "192.168.43.154"; 
-$data = "http://".$ip.":81/attendance/index.php?aid=".md5($act_id)."&sub=".md5($sub_id);
+
+$data = "http://".IP.":".PORT_NUMBER."/attendance/index.php?aid=".md5($act_id)."&sub=".md5($sub_id);
 // $data = $current_class_row[0]["ref_text"]; 
 $filename = $PNG_TEMP_DIR.'class'.md5($data.'|'.$errorCorrectionLevel.'|'.$matrixPointSize).'.png';
 QRcode::png($data, $filename, $errorCorrectionLevel, $matrixPointSize, 2); 
