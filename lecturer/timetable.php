@@ -41,7 +41,7 @@ $page_title = "Timetable";
     <table class="table small timetable">
         <!-- display time -->
         <tr>
-            <td></td>
+            <td class="sticky-top"></td>
             <?php 
             /** timetable variable in loop
              * $i represents week_day
@@ -53,7 +53,7 @@ $page_title = "Timetable";
 
             for($i = 1; $i <= 6; $i++)
             {
-                echo "<td class='timetable-weekday' width='15%'>".$arr_week_day[$i]."</td>"; 
+                echo "<td class='timetable-weekday sticky-top' width='15%'>".$arr_week_day[$i]."</td>"; 
             } // end for loop
 
             ?>

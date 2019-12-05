@@ -33,3 +33,8 @@ function updateClock()
     // call this function again in 1000ms
     setTimeout(updateClock, 1000);
 }
+
+function toggleSidebar() 
+{
+    $('#sidebar').toggleClass('d-none d-block'); 
+}

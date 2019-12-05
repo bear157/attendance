@@ -17,8 +17,9 @@ public function getAllSubject()
         // ============= student get subject ============//
         case 1: 
             $sql = $this->conn->prepare("
-                SELECT * FROM tbl_subject sub 
+                SELECT sub.*, usr.full_name as lecturer_name FROM tbl_subject sub 
                 INNER JOIN tbl_enrollment enr ON enr.sub_id = sub.sub_id 
+                INNER JOIN tbl_user usr ON usr.usr_id = sub.lecturer 
                 WHERE sub.sem_id = :sem_id AND enr.student = :student ");
             $sql->execute([
                 "sem_id"    => SEM_ID, 
@@ -92,10 +93,11 @@ public function getTimetableData()
         // ============= student get subject ============//
         case 1: 
             $sql = $this->conn->prepare("
-                SELECT * 
+                SELECT `time`.*, sub.*, usr.full_name as lecturer_name  
                 FROM tbl_subject_time `time` 
                 INNER JOIN tbl_subject sub ON sub.sub_id = `time`.sub_id 
                 INNER JOIN tbl_enrollment enr ON enr.sub_id = sub.sub_id 
+                INNER JOIN tbl_user usr ON usr.usr_id = sub.lecturer 
                 WHERE enr.student = :student AND sub.sem_id = :sem_id 
                 ORDER BY `time`.start_time ASC, `time`.week_day ASC"); 
             $sql->execute([
@@ -341,6 +343,23 @@ public function getCancelHistory($sub_id)
     return $sql->fetchAll(PDO::FETCH_ASSOC); 
 }
 
+
+public function getCancelMessage() // display cancel class to student
+{
+    $sql = $this->conn->prepare("
+        SELECT sub.*, `time`.*, ifnull(ccl.reason,'-') as reason, ccl.cancel_date   
+        FROM tbl_class_cancel ccl 
+        INNER JOIN tbl_subject_time `time` ON `time`.time_id = ccl.time_id 
+        INNER JOIN tbl_subject sub ON sub.sub_id = `time`.sub_id 
+        INNER JOIN tbl_enrollment enr ON enr.sub_id = `time`.sub_id 
+        WHERE enr.student = :student AND sub.sem_id = :sem_id 
+        ORDER BY ccl.cancel_date DESC"); 
+    $sql->execute([
+        "student"   => USR_ID, 
+        "sem_id"    => SEM_ID 
+    ]); 
+    return $sql->fetchAll(PDO::FETCH_ASSOC); 
+}
 
 public function getSubjectAbsentHours($sub_id)
 {

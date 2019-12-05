@@ -1,22 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.8.3
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Dec 04, 2019 at 09:04 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.2.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `suc_attendance`
@@ -44,7 +25,11 @@ CREATE TABLE `tbl_attendance` (
 INSERT INTO `tbl_attendance` (`att_id`, `student`, `punch_time`, `is_verify`, `punch_method`, `act_id`) VALUES
 (1, 3, '2019-12-02 14:06:20', 0, 1, 1),
 (2, 3, '2019-12-03 04:21:18', 0, 1, 2),
-(3, 4, '2019-12-03 04:22:15', 0, 1, 2);
+(3, 4, '2019-12-03 04:22:15', 0, 1, 2),
+(4, 3, '2019-12-04 11:45:44', 0, 1, 5),
+(5, 4, '2019-12-04 15:26:24', 0, 1, 1),
+(6, 4, '2019-12-04 15:26:24', 0, 1, 4),
+(7, 3, '2019-12-05 05:22:47', 0, 1, 6);
 
 -- --------------------------------------------------------
 
@@ -67,7 +52,9 @@ CREATE TABLE `tbl_attendance_activity` (
 INSERT INTO `tbl_attendance_activity` (`act_id`, `time_id`, `created_by`, `created_date`, `ref_text`) VALUES
 (1, 3, 2, '2019-12-02 09:22:54', 'ehuonf'),
 (2, 4, 2, '2019-12-03 04:08:10', '68yxw0'),
-(4, 3, 2, '2019-12-01 16:00:00', '000000');
+(4, 3, 2, '2019-12-01 16:00:00', '000000'),
+(5, 1, 2, '2019-12-02 05:03:00', '000000'),
+(6, 8, 2, '2019-12-05 05:22:15', 'tnfh1b');
 
 -- --------------------------------------------------------
 
@@ -90,7 +77,7 @@ CREATE TABLE `tbl_class_cancel` (
 
 INSERT INTO `tbl_class_cancel` (`ccl_id`, `time_id`, `reason`, `cancel_date`, `created_date`, `status_id`) VALUES
 (2, 3, NULL, '2019-12-09', '2019-12-03 11:53:15', 1),
-(4, 6, NULL, '2019-12-04', '2019-12-04 06:55:37', 1);
+(5, 6, NULL, '2019-12-04', '2019-12-04 12:58:50', 1);
 
 -- --------------------------------------------------------
 
@@ -113,7 +100,8 @@ INSERT INTO `tbl_enrollment` (`enr_id`, `student`, `sub_id`, `enroll_date`) VALU
 (1, 3, 1, '2019-09-01 16:00:00'),
 (2, 3, 2, '2019-09-01 16:00:00'),
 (3, 4, 1, '2019-09-01 16:00:00'),
-(4, 4, 2, '2019-09-01 16:00:00');
+(4, 4, 2, '2019-09-01 16:00:00'),
+(5, 4, 3, '2019-12-05 05:06:32');
 
 -- --------------------------------------------------------
 
@@ -185,7 +173,8 @@ INSERT INTO `tbl_subject_time` (`time_id`, `sub_id`, `week_day`, `start_time`, `
 (4, 2, 2, '12:00:00', '19:00:00'),
 (5, 2, 3, '08:00:00', '13:00:00'),
 (6, 3, 3, '13:00:00', '23:00:00'),
-(7, 3, 4, '09:00:00', '12:00:00');
+(7, 3, 4, '09:00:00', '12:00:00'),
+(8, 1, 4, '13:00:00', '16:00:00');
 
 -- --------------------------------------------------------
 
@@ -278,25 +267,25 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_attendance`
 --
 ALTER TABLE `tbl_attendance`
-  MODIFY `att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_attendance_activity`
 --
 ALTER TABLE `tbl_attendance_activity`
-  MODIFY `act_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `act_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_class_cancel`
 --
 ALTER TABLE `tbl_class_cancel`
-  MODIFY `ccl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ccl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_enrollment`
 --
 ALTER TABLE `tbl_enrollment`
-  MODIFY `enr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `enr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_semester`
@@ -314,7 +303,7 @@ ALTER TABLE `tbl_subject`
 -- AUTO_INCREMENT for table `tbl_subject_time`
 --
 ALTER TABLE `tbl_subject_time`
-  MODIFY `time_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `time_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
@@ -322,7 +311,3 @@ ALTER TABLE `tbl_subject_time`
 ALTER TABLE `tbl_user`
   MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'running number', AUTO_INCREMENT=5;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

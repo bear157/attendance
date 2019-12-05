@@ -1,9 +1,10 @@
 <!-- Sidebar  -->
-<nav class="col-sm-2 no-gutter" id="sidebar">
+<button class="btn float-right mr-1 d-block d-sm-none hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+<nav class="d-none d-sm-block col-12 col-sm-2 no-gutter" id="sidebar">
     <div class="sidebar-logo">
         <img src="/attendance/assets/images/southern_logo.jpg">
     </div>
-
+    <button class="btn float-right mr-1 d-block d-sm-none hamburger text-light" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
     <div class="pt-2 sidebar-header border-bottom">
         <h5 class="text-center"><?= USR_FULL_NAME; ?></h5>
         <h6 class="text-center small" id="menu_datetime"></h6>

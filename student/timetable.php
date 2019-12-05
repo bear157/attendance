@@ -29,7 +29,7 @@ $page_title = "Timetable";
 ?>
 <div class="container">
     
-    <div align="center">
+    <div class="mx-auto" align="center">
         <h4>Timetable (<?= "Year ".SEM_YEAR." Semester ".SEM_NUMBER; ?>)</h4>
         <table>
             <tr>
@@ -41,7 +41,7 @@ $page_title = "Timetable";
     <table class="table small timetable">
         <!-- display time -->
         <tr>
-            <td></td>
+            <td class="sticky-top"></td>
             <?php 
             /** timetable variable in loop
              * $i represents week_day
@@ -53,7 +53,7 @@ $page_title = "Timetable";
 
             for($i = 1; $i <= 6; $i++)
             {
-                echo "<td class='timetable-weekday' width='15%'>".$arr_week_day[$i]."</td>"; 
+                echo "<td class='timetable-weekday sticky-top' width='15%'>".$arr_week_day[$i]."</td>"; 
             } // end for loop
 
             ?>
@@ -88,6 +88,7 @@ $page_title = "Timetable";
                         $end_time       = $row["end_time"]; 
                         $sub_name       = $row["sub_name"]; 
                         $sub_code       = $row["sub_code"]; 
+                        $lecturer_name  = $row["lecturer_name"]; 
 
                         // calculate time difference
                         $time1          = strtotime($start_time);    // start time
@@ -99,7 +100,7 @@ $page_title = "Timetable";
                             $arr_rowspan[$i] = 0;
                         $arr_rowspan[$i] += $rowspan-1; 
 
-                        echo "<td class='has-class' rowspan='$rowspan' style='background-color: ".$arr_color[$sub_id]."; '>$sub_code <br>$sub_name </td>"; 
+                        echo "<td class='has-class' rowspan='$rowspan' style='background-color: ".$arr_color[$sub_id]."; '>$sub_code <br>$sub_name <br>$lecturer_name</td>"; 
                     } // end foreach
 
 

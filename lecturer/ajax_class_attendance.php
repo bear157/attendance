@@ -39,7 +39,7 @@ $draw = new diagramdraw();
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane active" id="list">
-            <button class="btn btn-success btn-sm" type="button">Verify Attendance <i class="fas fa-check"></i></button>
+            <button class="btn btn-success btn-sm d-none" type="button">Verify Attendance <i class="fas fa-check"></i></button>
 
             <table class="table table-bordered">
                 <thead class="thead-light">
