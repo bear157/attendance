@@ -18,7 +18,7 @@ if(isset($_GET["dates"]) && !empty($_GET["dates"]))
     $cancel_dates = $_GET["dates"];     
 }
 else
-    $dates = "";
+    $cancel_dates = "";
 
 //=====  load subject class =====//
     $sub_class = new Subject($db->conn); 
