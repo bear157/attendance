@@ -7,9 +7,12 @@ class Database{
 
     public $conn;
     
-    public function __construct()
+    public function __construct($host = false)
     {
-        $this->dbConnect();
+        if(!$host)
+            $this->dbConnect();
+        else
+            $this->hostConnect();
     }
     
     private function dbConnect()
@@ -22,6 +25,17 @@ class Database{
             echo "DB connection error";
         }   
     }
+
+    private function hostConnect()
+    {
+        try
+        {
+            $this->conn = new PDO("mysql:host=$this->db_host",$this->db_username, $this->db_password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        }catch(PDOException $e){
+            echo "Host connection error";
+        }   
+    } 
 
     public function closeConn() 
     {
