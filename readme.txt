@@ -1,7 +1,10 @@
 This project is done by Yee Jian Xiong (B180237C).
 
 View the system online: 
-    http://jxyee.epizy.com/attendance
+    http://jxyee.epizy.com/attendance 
+
+Download from github: 
+    https://github.com/bear157/attendance 
 
 ***************************************************************************************************
 To install the system in localhost: 
