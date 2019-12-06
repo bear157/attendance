@@ -124,7 +124,7 @@ CREATE TABLE `tbl_semester` (
 --
 
 INSERT INTO `tbl_semester` (`sem_id`, `sem_name`, `sem_year`, `sem_number`, `start_date`, `end_date`) VALUES
-(1, '2019C', 2019, 3, '2019-08-26', '2020-01-05');
+(1, '2019C', 2019, 3, '2019-08-26', '2020-03-05');
 
 -- --------------------------------------------------------
 
